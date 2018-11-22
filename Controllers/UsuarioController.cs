@@ -93,6 +93,7 @@ namespace Senai.Financas.Mvc.Web.Controllers {
             UsuarioRepositorio rep = new UsuarioRepositorio ();
             rep.Excluir (id);
             return RedirectToAction("Listar");
+            
         }
 
     }
