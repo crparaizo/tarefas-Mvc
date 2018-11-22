@@ -32,7 +32,7 @@ namespace Senai.Financas.Mvc.Web {
             app.UseMvc (
                 rota => rota.MapRoute (
                     name: "defaults",
-                    template: "{controller=Transacao}/{action=Cadastrar}")
+                    template: "{controller=Usuario}/{action=Cadastro}")
             );
         }
     }

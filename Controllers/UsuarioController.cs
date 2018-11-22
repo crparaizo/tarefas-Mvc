@@ -21,15 +21,8 @@ namespace Senai.Financas.Mvc.Web.Controllers {
             usuarioModel.DataNascimento = DateTime.Parse (form["dataNascimento"]);
             usuarioModel.Senha = form["senha"];
 
-            //Aplicando o ID
-            if (System.IO.File.Exists ("usuarios.csv"))
-                usuarioModel.ID = System.IO.File.ReadAllLines ("usuarios.csv").Length + 1;
-            else
-                usuarioModel.ID = 1;
-
-            using (StreamWriter sw = new StreamWriter ("usuarios.csv", true)) {
-                sw.WriteLine ($"{usuarioModel.ID};{usuarioModel.Nome};{usuarioModel.Email};{usuarioModel.Senha};{usuarioModel.DataNascimento}");
-            }
+            UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio ();
+            usuarioRepositorio.Cadastrar (usuarioModel);
 
             ViewBag.Mensagem = "Usuário Cadastrado";
 
@@ -92,9 +85,54 @@ namespace Senai.Financas.Mvc.Web.Controllers {
         public IActionResult Excluir (int id) {
             UsuarioRepositorio rep = new UsuarioRepositorio ();
             rep.Excluir (id);
-            return RedirectToAction("Listar");
-            
+
+            TempData["Mensagem"] = "Usuário excluído";
+
+            return RedirectToAction ("Listar");
+        }
+
+        [HttpGet]
+
+        public IActionResult Editar (int id) {
+
+            if (id == 0) {
+                TempData["Mensagem"] = "Informe um id";
+                return RedirectToAction ("Listar");
+            }
+
+            UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio ();
+            UsuarioModel usuario = usuarioRepositorio.BuscarPorId (id);
+
+            if (usuario != null)
+            {
+                ViewBag.Usuario = usuario;
+                return View();
+            }
+
+            TempData["Mensagem"] = "Usuário não encontrado";
+
+            return RedirectToAction ("Listar");
+        }
+
+        [HttpPost]
+
+        public IActionResult Editar (IFormCollection form) {
+
+            UsuarioModel usuario = new UsuarioModel ();
+            usuario.ID = int.Parse (form["id"]);
+            usuario.Nome = form["nome"];
+            usuario.Email = form["email"];
+            usuario.Senha = form["senha"];
+            usuario.DataNascimento = DateTime.Parse (form["dataNascimento"]);
+
+            UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio ();
+            usuarioRepositorio.Editar (usuario);
+
+            TempData["Mensagem"] = "Usuário alterado";
+
+            return RedirectToAction ("Listar");
         }
 
     }
+
 }
