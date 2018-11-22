@@ -7,37 +7,32 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Senai.Financas.Mvc.Web
-{
-    public class Startup
-    {
+namespace Senai.Financas.Mvc.Web {
+    public class Startup {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc();
+        public void ConfigureServices (IServiceCollection services) {
+            services.AddMvc ();
 
-            services.AddDistributedMemoryCache();
+            services.AddDistributedMemoryCache ();
 
-            services.AddSession(
-                options => options.IdleTimeout = TimeSpan.FromMinutes(30)
+            services.AddSession (
+                options => options.IdleTimeout = TimeSpan.FromMinutes (30)
             );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
+        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
+            if (env.IsDevelopment ()) {
+                app.UseDeveloperExceptionPage ();
             }
 
-            app.UseSession();
+            app.UseSession ();
 
-            app.UseMvc( 
-                rota => rota.MapRoute(
-                    name: "defaults",                     
-                    template: "{controller=Transacao}/{action=Cadastrar}")  
+            app.UseMvc (
+                rota => rota.MapRoute (
+                    name: "defaults",
+                    template: "{controller=Transacao}/{action=Cadastrar}")
             );
         }
     }

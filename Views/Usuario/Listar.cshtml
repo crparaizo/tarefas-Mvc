@@ -1,0 +1,45 @@
+@using Senai.Financas.Mvc.Web.Models;
+
+<h3>Listagem de usuários</h3>
+
+<table>
+    <thead>
+        <tr>
+            <td>Nome</td>
+            <td>E-mail</td>
+            <td>Data de nascinmento</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(UsuarioModel usuario in ViewData["Usuarios"] as List<UsuarioModel> ) {
+
+            <tr>
+                <td>
+                    @usuario.Nome
+                </td>
+                <td>
+                    @usuario.Email
+                </td>
+                <td>
+                    @usuario.DataNascimento.ToShortDateString()
+                </td>
+                <td>
+                    <a href="/Usuario/Excluir?iD=@usuario.ID">Excluir</a>
+                </td>
+            </tr>
+            }
+    </tbody>
+</table>
+
+@* @UsuarioModel razor *@
+
+<!-- <select>
+
+    @foreach(UsuarioModel usuario in ViewData["Usuarios"] as List<UsuarioModel>) {
+
+        <option>
+            @usuario.Nome
+        </option>
+        }
+
+</select> -->
