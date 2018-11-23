@@ -5,7 +5,7 @@ using Senai.Financas.Mvc.Web.Models;
 using Senai_Financas_Web_Mvc_Tarde.Interfaces;
 
 namespace Senai.Financas.Mvc.Web.Repositorios {
-    public class UsuarioRepositorio : IUsuario {
+    public class UsuarioRepositorioCSV : IUsuario {
         public UsuarioModel BuscarPorEmailESenha (string email, string senha) {
             List<UsuarioModel> usuariosCadastrados = CarregarDoCSV ();
 
@@ -43,14 +43,14 @@ namespace Senai.Financas.Mvc.Web.Repositorios {
                 string[] dadosDaLinha = linha.Split (';');
 
                 //Cria o objeto com os dados da linha do CSV
-                UsuarioModel usuario = new UsuarioModel {
+                UsuarioModel usuario = new UsuarioModel (
 
-                    ID = int.Parse (dadosDaLinha[0]),
-                    Nome = dadosDaLinha[1],
-                    Email = dadosDaLinha[2],
-                    Senha = dadosDaLinha[3],
-                    DataNascimento = DateTime.Parse (dadosDaLinha[4])
-                };
+                    id: int.Parse (dadosDaLinha[0]),
+                    nome: dadosDaLinha[1],
+                    email: dadosDaLinha[2],
+                    senha: dadosDaLinha[3],
+                    dataNascimento: DateTime.Parse (dadosDaLinha[4])
+                );
 
                 //Adicionando o usuário na lista
                 lsUsuarios.Add (usuario);
@@ -133,12 +133,14 @@ namespace Senai.Financas.Mvc.Web.Repositorios {
                 string[] dados = linhas[i].Split (';');
 
                 if (dados[0] == Id.ToString ()) {
-                    UsuarioModel usuario = new UsuarioModel ();
-                    usuario.ID = int.Parse (dados[0]);
-                    usuario.Nome = dados[1];
-                    usuario.Email = dados[2];
-                    usuario.Senha = dados[3];
-                    usuario.DataNascimento = DateTime.Parse (dados[4]);
+                    UsuarioModel usuario = new UsuarioModel (
+
+                        id: int.Parse (dados[0]),
+                        nome: dados[1],
+                        email: dados[2],
+                        senha: dados[3],
+                        dataNascimento: DateTime.Parse (dados[4])
+                    );
 
                     return usuario;
                 }

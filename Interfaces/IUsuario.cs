@@ -14,8 +14,8 @@ namespace Senai_Financas_Web_Mvc_Tarde.Interfaces {
 
         UsuarioModel Editar (UsuarioModel usuario);
 
-        UsuarioModel BuscarPorEmailESenha(string email, string senha);
+        UsuarioModel BuscarPorEmailESenha (string email, string senha);
 
-        UsuarioModel BuscarPorId(int Id);
+        UsuarioModel BuscarPorId (int Id);
     }
 }
